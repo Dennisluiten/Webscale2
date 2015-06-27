@@ -50,8 +50,10 @@ public class CsvHandler {
 				int productID             = Integer.parseInt(part[8]);
 				int price                 = Integer.parseInt(part[9]);
 				boolean response          = Boolean.getBoolean(part[10]);
+				int runID				  = Integer.parseInt(part[11]);
+				int i					  = Integer.parseInt(part[12]);
 				
-				data.add(new DataPoint(userID, platform, language, age, searchEngine, header, adtype, color, productID, price, response));
+				data.add(new DataPoint(userID, platform, language, age, searchEngine, header, adtype, color, productID, price, response, runID, i));
 			}
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

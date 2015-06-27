@@ -11,6 +11,15 @@ public class Main {
 		CsvHandler.saveToCSV(ds);
 		LinkedList<DataPoint> ds2 = CsvHandler.loadFromCSV();
 		System.out.println(ds2.get(0).toCsvString());
+		
+		LinkedList<DataPoint> ds3 = new LinkedList<>();
+		
+		for (int runID = 1; runID < 10; runID++){
+			for (int i = 1; i < 9900; i++){
+				DataPoint dp = ServerHandler.getContext(i, runID);
+				
+			}
+		}
 	}
 
 }

@@ -3,6 +3,8 @@ package main;
 import java.util.Random;
 
 public class DataPoint {
+	int runID				  = 0;
+	int i					  = 0;
 	int userID                = 0;
 	Platform platform         = Platform.MOBILE;
 	Language language         = Language.NA;
@@ -13,7 +15,7 @@ public class DataPoint {
 	Color color               = Color.BLACK;
 	int productID             = -1;		// 10 - 25
 	int price                 = -1;     // 0 - 50  -> 10-40
-	boolean response          = false;
+	boolean success           = false;
 	
 	private static Random random = new Random(System.currentTimeMillis());
 	
@@ -23,7 +25,7 @@ public class DataPoint {
 	
 	public DataPoint(int userID, Platform platform, Language language, int age,
 			SearchEngine searchEngine, int header, Adtype adtype, Color color,
-			int productID, int price, boolean response) {
+			int productID, int price, boolean response, int runID, int i) {
 		this.userID = userID;
 		this.platform = platform;
 		this.language = language;
@@ -34,16 +36,20 @@ public class DataPoint {
 		this.color = color;
 		this.productID = productID;
 		this.price = price;
-		this.response = response;
+		this.success = response;
+		this.runID = runID;
+		this.i = i;
 	}
 
 	public DataPoint(int userID, Platform platform, Language language, int age,
-			SearchEngine searchEngine) {
+			SearchEngine searchEngine, int runID, int i) {
 		this.userID = userID;
 		this.platform = platform;
 		this.language = language;
 		this.age = age;
 		this.searchEngine = searchEngine;
+		this.runID = runID;
+		this.i = i;
 		System.out.println("Adding random arguments to context.");
 		header = randomHeader();
 		adtype = Adtype.values()[random.nextInt(3)];
@@ -53,7 +59,7 @@ public class DataPoint {
 	}
 	
 	public String toCsvString(){
-		return String.format("%d,%s,%s,%d,%s,%d,%s,%s,%d,%d,%b \n", userID, platform, language, age, searchEngine, header, adtype, color, productID, price, response);
+		return String.format("%d,%s,%s,%d,%s,%d,%s,%s,%d,%d,%b,%d,%d\n", userID, platform, language, age, searchEngine, header, adtype, color, productID, price, success, runID, i);
 	}
 	
 	public int randomHeader(){

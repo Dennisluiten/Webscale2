@@ -13,45 +13,76 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ServerHandler {
-	String teamid = "teamPancake";
-	String password = "eb932e1586902b93a5ca86ff03d5aa90";
+	private static String teamid = "teamPancake";
+	private static String password = "eb932e1586902b93a5ca86ff03d5aa90";
 	
 	public static void main(String[] args) {
-		new ServerHandler().getContext(1, 1);
-
+		ServerHandler.getContext(1, 1);
+		String s0 = "0";
+		Boolean b0 = Boolean.valueOf(s0);
+		System.out.println("b1:" + b0);
+		
+		String s1 = "1";
+		Boolean b1 = Boolean.valueOf(s1);
+		System.out.println("b1:" + b1);
 	}
 	
 	public ServerHandler (){
 	}
 	
-	public DataPoint makeRequest(){		
-		return null;
+	public static void submitResponse(DataPoint d){		
+	    String url = String.format("http://krabspin.uci.ru.nl/proposePage.json/?i=%d&runid=%d&teamid=%s&teampw=%s&header=%d&adtype=%s&color=%s&productid=%d&price=%d", 
+	    		d.i, d.runID, teamid, password, d.header, d.adtype, d.color, d.productID, d.price);
+	    try {
+			JSONObject json = readJSON(url, "effect");
+			int success = Integer.parseInt(json.get("Success").toString());
+			boolean b = false;
+			if (success == 1)
+				b = true;
+			d.success = b;		
+		} catch (IOException | JSONException e) {
+			System.out.println("Deze exception handel ik (nog) niet af.");
+			e.printStackTrace();
+		}
 	}
 	
-	public DataPoint getContext(int i, int runid){
+	public static DataPoint getContext(int i, int runid){
+		DataPoint data = null;
 		String url = String.format("http://krabspin.uci.ru.nl/getcontext.json/?i=%d&runid=%d&teamid=%s&teampw=%s", i, runid, teamid, password);
 		try {
-			JSONObject json = readJSON(url);
-			System.out.println(json.get("Language"));
+			JSONObject json = readJSON(url, "context");
+			Language l = Language.valueOf(json.get("Language").toString());
+			Platform p = Platform.valueOf(json.get("Platform").toString());
+			SearchEngine se = SearchEngine.valueOf(json.get("Agent").toString());
+			int userID = Integer.parseInt(json.getString("UserID"));
+			int age = Integer.parseInt(json.getString("Age"));
+			data = new DataPoint(userID, p, l, age, se, runid, i);
 			System.out.println(json);
 			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
+		}catch (IOException | JSONException e) {
+			System.out.println("Deze exception handel ik (nog) niet af.");
 			e.printStackTrace();
 		}	
-		return null;
+		return data;
 	}
 	
-	public JSONObject readJSON(String urlString) throws MalformedURLException, IOException, JSONException{
+	/**
+	 * 
+	 * @param urlString
+	 * @param arg context of effect
+	 * @return 
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public static JSONObject readJSON(String urlString, String arg) throws MalformedURLException, IOException, JSONException{
+		System.out.println(urlString);
 		InputStream is = new URL(urlString).openStream();
 	    try {
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 	      String jsonText = readAll(rd);
 	      JSONObject json = new JSONObject(jsonText);
-	      json = json.getJSONObject("context");
+	      json = json.getJSONObject(arg);
 	      return json;
 	    } finally {
 	      is.close();
