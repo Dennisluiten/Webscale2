@@ -24,7 +24,7 @@ public class Main {
 				ds3.add(dp);
 			}
 		}
-		CsvHandler.saveToCSV(ds3);
+		OutputWriter.saveToCSV(ds3, "");
 	}
 
 }

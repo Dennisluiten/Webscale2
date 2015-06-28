@@ -10,7 +10,7 @@ public class DataPoint {
 	Language language         = Language.NA;
 	int age                   = -1;
 	SearchEngine searchEngine = SearchEngine.NA;
-	int header                = -1;
+	int header                = -1; // 5 - 15 - 35
 	Adtype adtype             = Adtype.BANNER;
 	Color color               = Color.BLACK;
 	int productID             = -1;		// 10 - 25
@@ -70,6 +70,13 @@ public class DataPoint {
 			return 15;
 		else 
 			return 35;
+	}
+	
+	public int reward (){
+		if(success)
+			return price;
+		else
+			return 0;
 	}
 	
 	

@@ -8,10 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
-public class CsvHandler {
-	private static String path = "resources/output.txt";
+public class OutputWriter {
+	private static String standardCsvPath = "resources/output.txt";
 	
-	public static void saveToCSV(LinkedList<DataPoint> datapoints){
+	public static void saveToCSV(LinkedList<DataPoint> datapoints, String path){
+		if(path == ""){
+			path = OutputWriter.standardCsvPath;
+		}
 		try {
 			 
 			File file = new File(path); 
@@ -34,7 +37,10 @@ public class CsvHandler {
 		}
 	}
 	
-	public static LinkedList<DataPoint> loadFromCSV() {
+	public static LinkedList<DataPoint> loadFromCSV(String path) {
+		if(path == ""){
+			path = OutputWriter.standardCsvPath;
+		}
 		LinkedList<DataPoint> data = new LinkedList<DataPoint>();
 		try {
 			for (String line : Files.readAllLines(Paths.get(path))) {
