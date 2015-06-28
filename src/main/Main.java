@@ -15,8 +15,11 @@ public class Main {
 		LinkedList<DataPoint> ds3 = new LinkedList<>();
 		
 		for (int runID = 1; runID < 10; runID++){
-			for (int i = 1; i < 9900; i++){
+//			System.out.println(runID);
+			for (int i = 1; i < 10000; i++){
+				System.out.println(runID + "-"+ i);
 				DataPoint dp = ServerHandler.getContext(i, runID);
+				ServerHandler.submitResponse(dp);
 				ds3.add(dp);
 			}
 		}

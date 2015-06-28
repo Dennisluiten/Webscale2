@@ -1,5 +1,5 @@
 package main;
 
 public enum SearchEngine {
-	GOOGLE, BING, NA;
+	Google, Bing, NA;
 }

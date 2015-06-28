@@ -50,14 +50,16 @@ public class ServerHandler {
 		DataPoint data = null;
 		String url = String.format("http://krabspin.uci.ru.nl/getcontext.json/?i=%d&runid=%d&teamid=%s&teampw=%s", i, runid, teamid, password);
 		try {
+			
 			JSONObject json = readJSON(url, "context");
-			Language l = Language.valueOf(json.get("Language").toString());
-			Platform p = Platform.valueOf(json.get("Platform").toString());
-			SearchEngine se = SearchEngine.valueOf(json.get("Agent").toString());
-			int userID = Integer.parseInt(json.getString("UserID"));
-			int age = Integer.parseInt(json.getString("Age"));
+//			System.out.println(json);
+			Language l = Language.valueOf(json.getString("Language"));
+			Platform p = Platform.valueOf(json.getString("Agent"));
+			SearchEngine se = SearchEngine.valueOf(json.getString("Referer"));
+			int userID = json.getInt("ID");
+			int age = json.getInt("Age");
 			data = new DataPoint(userID, p, l, age, se, runid, i);
-			System.out.println(json);
+			
 			
 		}catch (IOException | JSONException e) {
 			System.out.println("Deze exception handel ik (nog) niet af.");
@@ -75,8 +77,8 @@ public class ServerHandler {
 	 * @throws IOException
 	 * @throws JSONException
 	 */
-	public static JSONObject readJSON(String urlString, String arg) throws MalformedURLException, IOException, JSONException{
-		System.out.println(urlString);
+	private static JSONObject readJSON(String urlString, String arg) throws MalformedURLException, IOException, JSONException{
+//		System.out.println(urlString);
 		InputStream is = new URL(urlString).openStream();
 	    try {
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));

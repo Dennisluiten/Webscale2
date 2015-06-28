@@ -1,5 +1,5 @@
 package main;
 
 public enum Platform {
-	OSX, WINDOWS, LINUX, MOBILE;
+	OSX, Windows, Linux, mobile;
 }

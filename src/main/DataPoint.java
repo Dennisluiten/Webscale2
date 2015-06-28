@@ -6,7 +6,7 @@ public class DataPoint {
 	int runID				  = 0;
 	int i					  = 0;
 	int userID                = 0;
-	Platform platform         = Platform.MOBILE;
+	Platform platform         = Platform.mobile;
 	Language language         = Language.NA;
 	int age                   = -1;
 	SearchEngine searchEngine = SearchEngine.NA;
@@ -50,7 +50,7 @@ public class DataPoint {
 		this.searchEngine = searchEngine;
 		this.runID = runID;
 		this.i = i;
-		System.out.println("Adding random arguments to context.");
+//		System.out.println("Adding random arguments to context.");
 		header = randomHeader();
 		adtype = Adtype.values()[random.nextInt(3)];
 		color = Color.values()[random.nextInt(5)];
