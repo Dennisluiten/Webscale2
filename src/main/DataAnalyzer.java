@@ -33,7 +33,7 @@ public class DataAnalyzer {
 			switch(dp.header){
 			case 5: header5.streamingAverage(dp.reward()); break;
 			case 15: header15.streamingAverage(dp.reward()); break;
-			case 35: header15.streamingAverage(dp.reward()); break;
+			case 35: header35.streamingAverage(dp.reward()); break;
 			}
 			switch (dp.adtype){
 			case BANNER: adBanner.streamingAverage(dp.reward()); break;
@@ -70,6 +70,7 @@ public class DataAnalyzer {
 			a.print();
 		for (Average a: price)
 			a.print();
+		total.print();
 	}
 
 }

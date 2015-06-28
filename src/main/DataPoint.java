@@ -55,7 +55,7 @@ public class DataPoint {
 		adtype = Adtype.values()[random.nextInt(3)];
 		color = Color.values()[random.nextInt(5)];
 		productID = random.nextInt(16)+10;
-		price = random.nextInt(31) + 10;
+		price = random.nextInt(41) + 10;
 	}
 	
 	public String toCsvString(){
