@@ -20,6 +20,7 @@ public class Main {
 				System.out.println(runID + "-"+ i);
 				DataPoint dp = ServerHandler.getContext(i, runID);
 				ServerHandler.submitResponse(dp);
+
 				ds3.add(dp);
 			}
 		}
