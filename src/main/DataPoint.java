@@ -54,7 +54,7 @@ public class DataPoint {
 		header = randomHeader();
 		adtype = Adtype.values()[random.nextInt(3)];
 		color = Color.values()[random.nextInt(5)];
-		productID = random.nextInt(15)+10;
+		productID = random.nextInt(16)+10;
 		price = random.nextInt(31) + 10;
 	}
 	
@@ -73,6 +73,7 @@ public class DataPoint {
 	}
 	
 	public int reward (){
+//		System.out.println(String.format("Sucess: %b, price: %d", success, price));
 		if(success)
 			return price;
 		else

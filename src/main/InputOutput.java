@@ -8,17 +8,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
-public class OutputWriter {
+public class InputOutput {
 	private static String standardCsvPath = "resources/output.txt";
 	
 	public static void saveToCSV(LinkedList<DataPoint> datapoints, String path){
 		if(path == ""){
-			path = OutputWriter.standardCsvPath;
+			path = InputOutput.standardCsvPath;
 		}
 		try {
 			 
 			File file = new File(path); 
-			// if file doesnt exists, then create it
 			if (!file.exists()) {
 				file.createNewFile();
 			}
@@ -30,7 +29,7 @@ public class OutputWriter {
 				bw.write(d.toCsvString());
 			bw.close();
  
-			System.out.println("Done");
+			System.out.println("CSV-file saved");
  
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,7 +38,7 @@ public class OutputWriter {
 	
 	public static LinkedList<DataPoint> loadFromCSV(String path) {
 		if(path == ""){
-			path = OutputWriter.standardCsvPath;
+			path = InputOutput.standardCsvPath;
 		}
 		LinkedList<DataPoint> data = new LinkedList<DataPoint>();
 		try {
@@ -55,10 +54,9 @@ public class OutputWriter {
 				Color color               = Color.valueOf(part[7]);
 				int productID             = Integer.parseInt(part[8]);
 				int price                 = Integer.parseInt(part[9]);
-				boolean response          = Boolean.getBoolean(part[10]);
+				boolean response          = Boolean.parseBoolean(part[10]);
 				int runID				  = Integer.parseInt(part[11]);
 				int i					  = Integer.parseInt(part[12]);
-				
 				data.add(new DataPoint(userID, platform, language, age, searchEngine, header, adtype, color, productID, price, response, runID, i));
 			}
 		} catch (NumberFormatException e) {
