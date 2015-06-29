@@ -20,21 +20,10 @@ public class ServerHandler {
 	private static String teamid = "teamPancake";
 	private static String password = "eb932e1586902b93a5ca86ff03d5aa90";
 	
-	public static void main(String[] args) {
-		ServerHandler.getContext(1, 1);
-		String s0 = "0";
-		Boolean b0 = Boolean.valueOf(s0);
-		System.out.println("b1:" + b0);
-		
-		String s1 = "1";
-		Boolean b1 = Boolean.valueOf(s1);
-		System.out.println("b1:" + b1);
-	}
-	
 	public ServerHandler (){
 	}
 	
-	public static void submitResponse(DataPoint d){		
+	public static void proposePage(DataPoint d){		
 	    String url = String.format("http://krabspin.uci.ru.nl/proposePage.json/?i=%d&runid=%d&teamid=%s&teampw=%s&header=%d&adtype=%s&color=%s&productid=%d&price=%d", 
 	    		d.i, d.runID, teamid, password, d.header, d.adtype, d.color, d.productID, d.price);
 	    try {
@@ -50,7 +39,7 @@ public class ServerHandler {
 		}
 	}
 	
-	public static DataPoint getContext(int i, int runid){
+	public static DataPoint getContext(int i, int runid, boolean addRandom){
 		DataPoint data = null;
 		String url = String.format("http://krabspin.uci.ru.nl/getcontext.json/?i=%d&runid=%d&teamid=%s&teampw=%s", i, runid, teamid, password);
 		try {
@@ -62,7 +51,7 @@ public class ServerHandler {
 			SearchEngine se = SearchEngine.valueOf(json.getString("Referer"));
 			int userID = json.getInt("ID");
 			int age = json.getInt("Age");
-			data = new DataPoint(userID, p, l, age, se, runid, i);
+			data = new DataPoint(userID, p, l, age, se, runid, i, addRandom);
 			
 			
 		}catch (IOException | JSONException e) {

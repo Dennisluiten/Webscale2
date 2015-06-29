@@ -24,8 +24,7 @@ public class DataAnalyzer {
 		for(int i = 0; i< productID.length; i++)
 			productID[i] = new Average(String.format("ProductID=%d", i));
 		for(int i = 0; i< price.length; i++)
-			price[i] = new Average(String.format("Price=%d", i));
-		
+			price[i] = new Average(String.format("Price=%d", i));		
 	}
 
 	public void analyseArgumentsSimple(LinkedList<DataPoint> data){

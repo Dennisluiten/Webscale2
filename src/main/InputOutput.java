@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 
 import enums.Adtype;
-import enums.Color;
+import enums.MyColor;
 import enums.Language;
 import enums.Platform;
 import enums.SearchEngine;
@@ -57,7 +57,7 @@ public class InputOutput {
 				SearchEngine searchEngine = SearchEngine.valueOf(part[4]);
 				int header                = Integer.parseInt(part[5]);
 				Adtype adtype             = Adtype.valueOf(part[6]);
-				Color color               = Color.valueOf(part[7]);
+				MyColor color               = MyColor.valueOf(part[7]);
 				int productID             = Integer.parseInt(part[8]);
 				int price                 = Integer.parseInt(part[9]);
 				boolean response          = Boolean.parseBoolean(part[10]);
@@ -66,10 +66,8 @@ public class InputOutput {
 				data.add(new DataPoint(userID, platform, language, age, searchEngine, header, adtype, color, productID, price, response, runID, i));
 			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;

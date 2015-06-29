@@ -3,7 +3,7 @@ package main;
 import java.util.Random;
 
 import enums.Adtype;
-import enums.Color;
+import enums.MyColor;
 import enums.Language;
 import enums.Platform;
 import enums.SearchEngine;
@@ -18,9 +18,9 @@ public class DataPoint {
 	SearchEngine searchEngine = SearchEngine.NA;
 	int header                = -1; // 5 - 15 - 35
 	Adtype adtype             = Adtype.BANNER;
-	Color color               = Color.BLACK;
-	int productID             = -1;		// 10 - 25
-	int price                 = -1;     // 0 - 50  -> 10-40
+	MyColor color               = MyColor.BLACK;
+	int productID             = -1;		// 10 - 25 Dit lijkt ordinaal te zijn. Wtf?
+	int price                 = -1;     // 0 - 50  -> 10-40   
 	boolean success           = false;
 	
 	private static Random random = new Random(System.currentTimeMillis());
@@ -30,7 +30,7 @@ public class DataPoint {
 	}
 	
 	public DataPoint(int userID, Platform platform, Language language, int age,
-			SearchEngine searchEngine, int header, Adtype adtype, Color color,
+			SearchEngine searchEngine, int header, Adtype adtype, MyColor color,
 			int productID, int price, boolean response, int runID, int i) {
 		this.userID = userID;
 		this.platform = platform;
@@ -48,7 +48,7 @@ public class DataPoint {
 	}
 
 	public DataPoint(int userID, Platform platform, Language language, int age,
-			SearchEngine searchEngine, int runID, int i) {
+			SearchEngine searchEngine, int runID, int i, boolean addRandom) {
 		this.userID = userID;
 		this.platform = platform;
 		this.language = language;
@@ -57,11 +57,25 @@ public class DataPoint {
 		this.runID = runID;
 		this.i = i;
 //		System.out.println("Adding random arguments to context.");
-		header = randomHeader();
-		adtype = Adtype.values()[random.nextInt(3)];
-		color = Color.values()[random.nextInt(5)];
-		productID = random.nextInt(16)+10;
-		price = random.nextInt(41) + 10;
+		if(addRandom){
+			header = randomHeader();
+			adtype = Adtype.values()[random.nextInt(3)];
+			color = MyColor.values()[random.nextInt(5)];
+			productID = random.nextInt(16)+10;
+			price = random.nextInt(50)+1;
+		}
+	}
+	
+	public void setSuccess(boolean success){
+		this.success = success;
+	}
+	
+	public void addArguments(int header, Adtype ad, MyColor color, int id, int price){
+		this.header = header;
+		this.adtype = ad;
+		this.color = color;
+		this.productID = id;
+		this.price = price;
 	}
 	
 	public String toCsvString(){
@@ -79,7 +93,6 @@ public class DataPoint {
 	}
 	
 	public int reward (){
-//		System.out.println(String.format("Sucess: %b, price: %d", success, price));
 		if(success)
 			return price;
 		else
