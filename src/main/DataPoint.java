@@ -2,6 +2,12 @@ package main;
 
 import java.util.Random;
 
+import enums.Adtype;
+import enums.Color;
+import enums.Language;
+import enums.Platform;
+import enums.SearchEngine;
+
 public class DataPoint {
 	int runID				  = 0;
 	int i					  = 0;

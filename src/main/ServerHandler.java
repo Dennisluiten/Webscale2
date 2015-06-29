@@ -12,6 +12,10 @@ import java.nio.charset.Charset;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import enums.Language;
+import enums.Platform;
+import enums.SearchEngine;
+
 public class ServerHandler {
 	private static String teamid = "teamPancake";
 	private static String password = "eb932e1586902b93a5ca86ff03d5aa90";

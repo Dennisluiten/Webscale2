@@ -8,6 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
+import enums.Adtype;
+import enums.Color;
+import enums.Language;
+import enums.Platform;
+import enums.SearchEngine;
+
 public class InputOutput {
 	private static String standardCsvPath = "resources/output.txt";
 	
