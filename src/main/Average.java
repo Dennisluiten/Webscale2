@@ -18,6 +18,9 @@ public class Average {
 	}
 	
 	public void print(){
+		if(!(name.contains("=") && n == 0))
 		System.out.println(String.format("%-15s:  Average=%.3f     n=%d     success rate=%.3f", name, average, n, 1-fails*1.0/n));
 	}
+	
+	
 }

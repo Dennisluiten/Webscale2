@@ -8,7 +8,12 @@ public class SuccessEstimate {
 	public SuccessEstimate(String name){
 		this.name = name;
 	}
-	
+	/**
+	 * Wordt deze uberhaubt ergens gebruikt?
+	 * @param name
+	 * @param successes
+	 * @param n
+	 */
 	public SuccessEstimate(String name, int successes, int n){
 		this.name = name;
 		this.successes = successes;
@@ -26,7 +31,7 @@ public class SuccessEstimate {
 	}
 	
 	public void  print(){
-		System.out.println(String.format("%-15s:  successes=%d     n=%d     success rate=%.3f", name, successes, n, successes*1.0/n));
-
+		if(!(name.contains("=") && n == 0))
+			System.out.println(String.format("%-15s:  successes=%d     n=%d     success rate=%.3f", name, successes, n, successes*1.0/n));
 	}
 }

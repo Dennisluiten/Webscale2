@@ -22,11 +22,12 @@ public class DataPoint {
 	int productID             = -1;		// 10 - 25 Dit lijkt ordinaal te zijn. Wtf?
 	int price                 = -1;     // 0 - 50  -> 10-40   
 	boolean success           = false;
+	int reward				  = 0;
 	
 	private static Random random = new Random(System.currentTimeMillis());
 	
 	public DataPoint (){
-		System.out.println("Creating empty datapoint.");
+//		System.out.println("Creating empty datapoint.");
 	}
 	
 	public DataPoint(int userID, Platform platform, Language language, int age,
@@ -45,6 +46,9 @@ public class DataPoint {
 		this.success = response;
 		this.runID = runID;
 		this.i = i;
+		if(success){
+			reward = price;
+		}
 	}
 
 	public DataPoint(int userID, Platform platform, Language language, int age,
@@ -68,6 +72,8 @@ public class DataPoint {
 	
 	public void setSuccess(boolean success){
 		this.success = success;
+		reward = price;
+		
 	}
 	
 	public void addArguments(int header, Adtype ad, MyColor color, int id, int price){
@@ -90,14 +96,5 @@ public class DataPoint {
 			return 15;
 		else 
 			return 35;
-	}
-	
-	public int reward (){
-		if(success)
-			return price;
-		else
-			return 0;
-	}
-	
-	
+	}	
 }

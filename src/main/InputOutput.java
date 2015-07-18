@@ -46,6 +46,7 @@ public class InputOutput {
 		if(path == ""){
 			path = InputOutput.standardCsvPath;
 		}
+		System.out.println("Loading dataset: " + path);
 		LinkedList<DataPoint> data = new LinkedList<DataPoint>();
 		try {
 			for (String line : Files.readAllLines(Paths.get(path))) {

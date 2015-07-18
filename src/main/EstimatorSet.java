@@ -4,26 +4,26 @@ import enums.Adtype;
 import enums.MyColor;
 
 public class EstimatorSet {
-	SuccessEstimate header5 = new SuccessEstimate("Header5");
-	SuccessEstimate header15 = new SuccessEstimate("Header15");
-	SuccessEstimate header35 = new SuccessEstimate("Header35");
-	SuccessEstimate adBanner = new SuccessEstimate("Ad Banner");
-	SuccessEstimate adSky = new SuccessEstimate("Ad Skyscraper");
-	SuccessEstimate adSquare = new SuccessEstimate("Ad Square");
-	SuccessEstimate green = new SuccessEstimate("GREEN");
-	SuccessEstimate blue = new SuccessEstimate("BLUE");
-	SuccessEstimate red = new SuccessEstimate("RED");
-	SuccessEstimate black = new SuccessEstimate("BLACK");
-	SuccessEstimate white = new SuccessEstimate("WHITE");
-	SuccessEstimate [] productID = new SuccessEstimate [26];
-	SuccessEstimate [] price = new SuccessEstimate [51];
-	SuccessEstimate total = new SuccessEstimate("Total");
+	LeakySuccessEstimate header5 = new LeakySuccessEstimate("Header5");
+	LeakySuccessEstimate header15 = new LeakySuccessEstimate("Header15");
+	LeakySuccessEstimate header35 = new LeakySuccessEstimate("Header35");
+	LeakySuccessEstimate adBanner = new LeakySuccessEstimate("Ad Banner");
+	LeakySuccessEstimate adSky = new LeakySuccessEstimate("Ad Skyscraper");
+	LeakySuccessEstimate adSquare = new LeakySuccessEstimate("Ad Square");
+	LeakySuccessEstimate green = new LeakySuccessEstimate("GREEN");
+	LeakySuccessEstimate blue = new LeakySuccessEstimate("BLUE");
+	LeakySuccessEstimate red = new LeakySuccessEstimate("RED");
+	LeakySuccessEstimate black = new LeakySuccessEstimate("BLACK");
+	LeakySuccessEstimate white = new LeakySuccessEstimate("WHITE");
+	LeakySuccessEstimate [] productID = new LeakySuccessEstimate [26];
+	LeakySuccessEstimate [] price = new LeakySuccessEstimate [51];
+	LeakySuccessEstimate total = new LeakySuccessEstimate("Total");
 	
 	public EstimatorSet(){
 		for(int i = 0; i< productID.length; i++)
-			productID[i] = new SuccessEstimate(String.format("ProductID=%d", i));
+			productID[i] = new LeakySuccessEstimate(String.format("ProductID=%d", i));
 		for(int i = 0; i< price.length; i++)
-			price[i] = new SuccessEstimate(String.format("Price=%d", i));		
+			price[i] = new LeakySuccessEstimate(String.format("Price=%d", i));		
 	}
 	
 	public DataPoint propose(DataPoint context){
@@ -36,16 +36,32 @@ public class EstimatorSet {
 		return context;
 	}
 	
+	public void printBestArguments(){
+		int header = bestHeader();
+		Adtype ad = bestAd();
+		MyColor color = bestColor();
+		int pID = bestPID();
+		int price = bestPrice();
+		
+		System.out.println(String.format("Header: %d, Adtype: %-10s, Color: %-8s, Product ID: %d, Price: %d", header, ad.toString(), color.toString(), pID, price));
+	}
+	
 	private int bestPrice() {
-		SuccessEstimate best = price[0];
-		for(int i = 1;i < price.length; i++)
-			best = pickBest(best, price[i]);
-		String s = best.name.substring(6);
-		return Integer.parseInt(s);
+		LeakySuccessEstimate best = price[0];
+		int bestPrice = 0;
+		for(int i = 1; i < price.length; i++){
+			double estRewardBest = best.successRate()*bestPrice;
+			double estRewardNext = price[i].successRate()*i;
+			if(estRewardNext > estRewardBest){
+				best = price[i];
+				bestPrice = i;
+			}	
+		}
+		return bestPrice;
 	}
 
 	private int bestPID() {
-		SuccessEstimate best = productID[0];
+		LeakySuccessEstimate best = productID[0];
 		for(int i = 1;i < productID.length; i++)
 			best = pickBest(best, productID[i]);
 		String s = best.name.substring(10);
@@ -53,7 +69,7 @@ public class EstimatorSet {
 	}
 
 	private MyColor bestColor() {
-		SuccessEstimate best = green;
+		LeakySuccessEstimate best = green;
 		best = pickBest(best, blue);
 		best = pickBest(best, red);
 		best = pickBest(best, black);
@@ -132,14 +148,14 @@ public class EstimatorSet {
 		red.print();
 		black.print();
 		white.print();
-		for(SuccessEstimate e: productID)
+		for(LeakySuccessEstimate e: productID)
 			e.print();
-		for(SuccessEstimate e: price)
+		for(LeakySuccessEstimate e: price)
 			e.print();
 		total.print();
 	}
 	
-	private SuccessEstimate pickBest(SuccessEstimate est1, SuccessEstimate est2){
+	private LeakySuccessEstimate pickBest(LeakySuccessEstimate est1, LeakySuccessEstimate est2){
 		if(est1.successRate() > est2.successRate())
 			return est1;
 		return est2;
